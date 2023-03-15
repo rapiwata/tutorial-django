@@ -14,7 +14,8 @@ from django.contrib.auth.decorators import login_required
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 
@@ -116,6 +117,29 @@ def delete_transaction(request, id):
     transaction.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('money_tracker:show_tracker'))
+
+@csrf_exempt
+def create_transaction_ajax(request):  
+# create object of form
+    form = TransactionRecordForm(request.POST or None)
+
+    if form.is_valid() and request.method == "POST":
+        form.save()
+        data = TransactionRecord.objects.last()
+
+        # parsing the form data into json
+        result = {
+            'id':data.id,
+            'name':data.name,
+            'type':data.type,
+            'amount':data.amount,
+            'date':data.date,
+            'description':data.description,
+        }
+        return JsonResponse(result)
+
+        context = {'form': form}
+        return render(request, "create_transaction.html", context)
 
 
 
