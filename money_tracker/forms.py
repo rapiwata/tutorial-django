@@ -5,3 +5,4 @@ class TransactionRecordForm(ModelForm):
     class Meta:
         model = TransactionRecord
         fields = ["name", "type", "amount", "description"]
+# ["name", "lesson", "subject", "progress", "description"]

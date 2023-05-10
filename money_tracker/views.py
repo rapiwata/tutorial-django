@@ -138,8 +138,8 @@ def create_transaction_ajax(request):
         }
         return JsonResponse(result)
 
-        context = {'form': form}
-        return render(request, "create_transaction.html", context)
+    context = {'form': form}
+    return render(request, "create_transaction.html", context)
 
 
 
