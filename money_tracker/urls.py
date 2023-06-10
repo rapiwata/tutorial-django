@@ -10,6 +10,8 @@ from money_tracker.views import logout_user
 from money_tracker.views import modify_transaction
 from money_tracker.views import delete_transaction
 from money_tracker.views import create_transaction_ajax
+from money_tracker.views import create_transaction_flutter
+from money_tracker.views import logout
 
 
 
@@ -31,5 +33,9 @@ urlpatterns = [
     path('modify/<int:id>', modify_transaction, name='modify_transaction'),
     path('delete/<int:id>', delete_transaction, name='delete_transaction'),
     path('create-ajax/', create_transaction_ajax, name='create_transaction_ajax'),
+    path('create-flutter/', create_transaction_flutter, name='create_transaction_flutter'),
+    path('logout/', logout, name='logout'),
+
+
 ]
 

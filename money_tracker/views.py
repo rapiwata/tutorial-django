@@ -141,7 +141,42 @@ def create_transaction_ajax(request):
     context = {'form': form}
     return render(request, "create_transaction.html", context)
 
+@csrf_exempt
+def create_transaction_flutter(request):
+    if request.method == 'POST':
 
+        data = json.loads(request.body)
+
+        new_transaction = TransactionRecord.objects.create(
+            name = data["name"],
+            type = data["type"],
+            amount = int(data["amount"]),
+            description = data["description"]
+        )
+
+        new_transaction.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)
+
+
+@csrf_exempt
+def logout(request):
+    username = request.user.username
+
+    try:
+        auth_logout(request)
+        return JsonResponse({
+            "username": username,
+            "status": True,
+            "message": "Logout berhasil!"
+        }, status=200)
+    except:
+        return JsonResponse({
+        "status": False,
+        "message": "Logout gagal."
+        }, status=401)
 
 
 
